@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', () => {
     
     if (target && target.classList.contains('tabheader__item')) {
       tabs.forEach((item, i) => {
-        if (target == item) {
+        if (target === item) {
           hideTabContent();
           showTabContent(i);
         }
@@ -49,9 +49,9 @@ window.addEventListener('DOMContentLoaded', () => {
       minutes = 0;
       seconds = 0;
     } else {
-        days = Math.floor(t / (1000 * 60 * 60 * 24)),
-        hours = Math.floor((t / (1000 * 60 * 60) % 24)),
-        minutes = Math.floor((t / 1000 / 60) % 60),
+        days = Math.floor(t / (1000 * 60 * 60 * 24));
+        hours = Math.floor((t / (1000 * 60 * 60) % 24));
+        minutes = Math.floor((t / 1000 / 60) % 60);
         seconds = Math.floor((t / 1000) % 60);
     }
     
@@ -91,11 +91,6 @@ window.addEventListener('DOMContentLoaded', () => {
       
       if (t.total <= 0) {
         clearInterval(timeInterval);
-        if (iphone.gb === 512) {
-          console.log('Мы идём покупать 14 про 512гб');
-        } else {
-          console.log('Мы идём покупать 14 про 256гб и зарядку');
-        }
       }
     }
   }
@@ -103,16 +98,18 @@ window.addEventListener('DOMContentLoaded', () => {
   setClock('.timer', deadline);
   
   // Modal
-  const modal = document.querySelector('.modal');
-  const modalBtn = document.querySelectorAll('.modalBtn');
-  const modalClose = document.querySelector('.modal__close');
+  const modal = document.querySelector('.modal'),
+        modalBtn = document.querySelectorAll('.modalBtn'),
+        modalClose = document.querySelector('.modal__close');
+  
+  function openModal () {
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    /*clearInterval(modalTimerId);*/
+  }
   
   modalBtn.forEach(item => {
-    item.addEventListener('click', () => {
-      modal.style.display = 'block';
-      document.body.style.overflow = 'hidden';
-      
-    });
+    item.addEventListener('click', openModal);
   });
   
   function closeModal() {
@@ -134,7 +131,14 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
   
-  const modalTimerId = setTimeout(() => {
+  /*const modalTimerId = setTimeout(openModal, 15000);*/
   
-  });
+  function showModalByScroll() {
+    if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight -1) {
+      openModal();
+      window.removeEventListener('scroll', showModalByScroll);
+    }
+  }
+  
+  window.addEventListener('scroll', showModalByScroll);
 })

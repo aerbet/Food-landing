@@ -51,6 +51,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+        user-select: none;
         &-counter {
             display: flex;
             width: 180px;

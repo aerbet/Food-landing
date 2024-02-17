@@ -1,8 +1,8 @@
 window.addEventListener('DOMContentLoaded', () => {
   
   const tabs = document.querySelectorAll('.tabheader__item'),
-        tabsContent = document.querySelectorAll('.tabcontent'),
-        tabsParent = document.querySelector('.tabheader__items');
+    tabsContent = document.querySelectorAll('.tabcontent'),
+    tabsParent = document.querySelector('.tabheader__items');
   
   const hideTabContent = () => {
     tabsContent.forEach(item => {
@@ -49,10 +49,10 @@ window.addEventListener('DOMContentLoaded', () => {
       minutes = 0;
       seconds = 0;
     } else {
-        days = Math.floor(t / (1000 * 60 * 60 * 24));
-        hours = Math.floor((t / (1000 * 60 * 60) % 24));
-        minutes = Math.floor((t / 1000 / 60) % 60);
-        seconds = Math.floor((t / 1000) % 60);
+      days = Math.floor(t / (1000 * 60 * 60 * 24));
+      hours = Math.floor((t / (1000 * 60 * 60) % 24));
+      minutes = Math.floor((t / 1000 / 60) % 60);
+      seconds = Math.floor((t / 1000) % 60);
     }
     
     return {
@@ -74,13 +74,14 @@ window.addEventListener('DOMContentLoaded', () => {
   
   function setClock(selector, endtime) {
     const timer = document.querySelector(selector),
-          days = timer.querySelector('#days'),
-          hours = timer.querySelector('#hours'),
-          minutes = timer.querySelector('#minutes'),
-          seconds = timer.querySelector('#seconds'),
-          timeInterval = setInterval(updateClock, 1000);
+      days = timer.querySelector('#days'),
+      hours = timer.querySelector('#hours'),
+      minutes = timer.querySelector('#minutes'),
+      seconds = timer.querySelector('#seconds'),
+      timeInterval = setInterval(updateClock, 1000);
     
     updateClock();
+    
     function updateClock() {
       const t = getTimeRemaining(endtime);
       
@@ -99,7 +100,7 @@ window.addEventListener('DOMContentLoaded', () => {
   
   // Modal
   const modalTrigger = document.querySelectorAll('[data-modal]'),
-        modal = document.querySelector('.modal');
+    modal = document.querySelector('.modal');
   
   modalTrigger.forEach(btn => {
     btn.addEventListener('click', openModal);
@@ -133,7 +134,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const modalTimerId = setTimeout(openModal, 300000);
   
   function showModalByScroll() {
-    if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight -1) {
+    if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) {
       openModal();
       window.removeEventListener('scroll', showModalByScroll);
     }
@@ -143,33 +144,33 @@ window.addEventListener('DOMContentLoaded', () => {
   
   // Creating classes for cards
   
- class MyCard {
-   constructor(src, alt, title, descr, price, parentSection, ...classes) {
-     this.src = src;
-     this.alt = alt;
-     this.title = title;
-     this.descr = descr;
-     this.price = price;
-     this.classes = classes;
-     this.parent = document.querySelector(parentSection);
-     this.transfer = 89;
-     this.changeToSom();
-   }
-   
-   changeToSom() {
-     this.price = this.price * this.transfer;
-   }
-   
-   render() {
-     const element = document.createElement('div');
-     if (this.classes.length === 0) {
-       this.element = 'col';
-       element.classList.add(this.element);
-     } else {
-       this.classes.forEach(className => element.classList.add(className));
-     }
-     
-     element.innerHTML = `
+  class MyCard {
+    constructor(src, alt, title, descr, price, parentSection, ...classes) {
+      this.src = src;
+      this.alt = alt;
+      this.title = title;
+      this.descr = descr;
+      this.price = price;
+      this.classes = classes;
+      this.parent = document.querySelector(parentSection);
+      this.transfer = 89;
+      this.changeToSom();
+    }
+    
+    changeToSom() {
+      this.price = this.price * this.transfer;
+    }
+    
+    render() {
+      const element = document.createElement('div');
+      if (this.classes.length === 0) {
+        this.element = 'col';
+        element.classList.add(this.element);
+      } else {
+        this.classes.forEach(className => element.classList.add(className));
+      }
+      
+      element.innerHTML = `
       <div class="menu__item">
         <img src=${this.src} alt=${this.alt}>
         <h3 class="menu__item-subtitle">${this.title}</h3>
@@ -181,11 +182,11 @@ window.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
      `;
-     this.parent.append(element);
-   }
- }
+      this.parent.append(element);
+    }
+  }
   
-  const getResource = async (url)=> {
+  /*const getResource = async (url) => {
     const res = await fetch(url);
     
     if(!res.ok) {
@@ -193,18 +194,18 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     
     return await res.json();
-  };
- 
-/* getResource('http://localhost:3000/menu')
-   .then(data => {
-     data.forEach(({ img, alt, title, descr, price }) => {
-       new MyCard(img, alt, title, descr, price, '.menu .container .row').render();
-     });
-   });*/
+  };*/
+  
+  /* getResource('http://localhost:3000/menu')
+     .then(data => {
+       data.forEach(({ img, alt, title, descr, price }) => {
+         new MyCard(img, alt, title, descr, price, '.menu .container .row').render();
+       });
+     });*/
   
   axios.get('http://localhost:3000/menu')
     .then(data => {
-      data.data.forEach(({ img, alt, title, descr, price }) => {
+      data.data.forEach(({img, alt, title, descr, price}) => {
         new MyCard(img, alt, title, descr, price, '.menu .container .row').render();
       });
     })
@@ -223,7 +224,7 @@ window.addEventListener('DOMContentLoaded', () => {
     bindPostData(item);
   })
   
-  const postData = async (url, data)=> {
+  const postData = async (url, data) => {
     const res = await fetch(url, {
       method: 'POST',
       headers: {
@@ -256,10 +257,10 @@ window.addEventListener('DOMContentLoaded', () => {
       
       postData('http://localhost:3000/requests', json)
         .then(data => {
-        console.log(data);
-        showThanksModal(message.success);
-        statusMessage.remove();
-      }).catch(() => {
+          console.log(data);
+          showThanksModal(message.success);
+          statusMessage.remove();
+        }).catch(() => {
         showThanksModal(message.failure);
         statusMessage.remove();
       }).finally(() => {
@@ -295,6 +296,49 @@ window.addEventListener('DOMContentLoaded', () => {
   fetch('http://localhost:3000/menu')
     .then(data => data.json())
     .then(res => console.log(res));
+  
+  // slider
+  
+  const prev = document.querySelector('.offer__slider-prev'),
+        next = document.querySelector('.offer__slider-next'),
+        current = document.querySelector('#current'),
+        total = document.querySelector('#total'),
+        wrapper = document.querySelectorAll('.offer__slide');
+  
+  let currentIndex = 0;
+  current.innerHTML = `${currentIndex}1`
+  let arr = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+             '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',];
+  total.innerHTML = `0${wrapper.length}`;
+  
+  
+  const showWrapper = () => {
+    wrapper.forEach(item => item.style.display = 'none');
+    
+    wrapper[currentIndex].style.display = 'block'
+  }
+  
+  showWrapper();
+  
+  next.addEventListener('click', () => {
+    currentIndex++;
+    
+    if (currentIndex >= wrapper.length) {
+      currentIndex = 0;
+    }
+    current.innerHTML = arr[currentIndex];
+    showWrapper();
+  })
+  
+  prev.addEventListener('click', () => {
+    currentIndex--;
+    
+    if (currentIndex < 0) {
+      currentIndex = wrapper.length - 1;
+    }
+    current.innerHTML = arr[currentIndex];
+    showWrapper();
+  })
   
 });
 

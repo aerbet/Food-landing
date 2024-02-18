@@ -388,11 +388,15 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
   
+  function removeNumber(str) {
+    return +str.replace(/\D/g, '');
+  }
+  
   next.addEventListener('click', () => {
-    if (offset === +width.slice(0, width.length - 2) * (wrapper.length - 1)) {
+    if (offset === removeNumber(width) * (wrapper.length - 1)) {
       offset = 0;
     } else {
-      offset += +width.slice(0, width.length - 2);
+      offset += removeNumber(width);
     }
     
     slideFields.style.transform = `translateX(-${offset}px)`;
@@ -409,9 +413,9 @@ window.addEventListener('DOMContentLoaded', () => {
   
   prev.addEventListener('click', () => {
     if (offset === 0) {
-      offset = +width.slice(0, width.length - 2) * (wrapper.length - 1);
+      offset = removeNumber(width) * (wrapper.length - 1);
     } else {
-      offset -= +width.slice(0, width.length - 2);
+      offset -= removeNumber(width);
     }
     
     slideFields.style.transform = `translateX(-${offset}px)`;
@@ -431,7 +435,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const slideTo = e.target.getAttribute('data-slide-to');
       
       slideIndex = slideTo;
-      offset = +width.slice(0, width.length - 2) * (slideTo - 1);
+      offset = removeNumber(width) * (slideTo - 1);
       
       slideFields.style.transform = `translateX(-${offset}px)`;
       

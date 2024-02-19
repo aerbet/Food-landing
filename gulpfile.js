@@ -22,7 +22,7 @@ gulp.task("build-js", () => {
 			webpack({
 				mode: "development",
 				output: {
-					filename: "script.js",
+					filename: "main.js",
 				},
 				watch: false,
 				devtool: "source-map",
